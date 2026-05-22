@@ -1,7 +1,6 @@
 package edu.stanford.communication.screenomics.modulemanager;
 
 /**
- * May 7, 2025
  * This class is used to turn on and off modules
  * For example if we set ENABLE_LOCATIONS = false then the locations module will not be used and true means it will be used
  *

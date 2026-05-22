@@ -71,7 +71,6 @@ import edu.stanford.communication.screenomics.specs.SpecsCollectionController;
 import edu.stanford.communication.screenomics.modulemanager.EventTimestamp;
 
 /**
- * @author Jack Boffa
  * Login screen where the user can create an account or login with code/email/password.
  */
 public class LoginActivity extends AppCompatActivity {
@@ -254,9 +253,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-        // Do first-time init stuff.
-//        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         if (!Utils.isInstallCodeSet(this))
         {
             onFirstRun();

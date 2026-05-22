@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace 'edu.stanford.communication.screenomics.apps'
+    namespace 'edu.stanford.communication.screenomics.screenomics'
     compileSdk 35
 
     defaultConfig {

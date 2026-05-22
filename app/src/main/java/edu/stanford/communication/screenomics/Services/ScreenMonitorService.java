@@ -1,19 +1,16 @@
 package edu.stanford.communication.screenomics.Services;
 
 import android.app.ActivityManager;
-import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
-import android.content.ComponentCallbacks2;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ServiceInfo;
-import android.media.projection.MediaProjectionManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -23,11 +20,9 @@ import android.os.Looper;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.core.content.ContextCompat;
 
 import java.util.List;
 import java.util.Random;
@@ -40,20 +35,17 @@ import edu.stanford.communication.screenomics.Activity.LoginActivity;
 import edu.stanford.communication.screenomics.Alarm.SetAlarm;
 import edu.stanford.communication.screenomics.PermissionScreens.PermissionParentActivity;
 import edu.stanford.communication.screenomics.DatabaseHelper.InterCommunicationPreference;
-import edu.stanford.communication.screenomics.DatabaseHelper.LogInPreference;
 import edu.stanford.communication.screenomics.FirebaseSettings.FirebaseManagerSingleton;
 import edu.stanford.communication.screenomics.FirebaseSettings.SettingsManager;
 import edu.stanford.communication.screenomics.FirebaseSettingsObserver;
 import edu.stanford.communication.screenomics.R;
-import edu.stanford.communication.screenomics.TextBasedData.EventMapBuilder;
 import edu.stanford.communication.screenomics.TextBasedData.EventOperationManager;
 import edu.stanford.communication.screenomics.TextBasedData.EventUploader;
 import edu.stanford.communication.screenomics.TextBasedData.EventUploaderToFireStore;
 import edu.stanford.communication.screenomics.activites.ActivitiesCollectionController;
-import edu.stanford.communication.screenomics.apps.AppsCollectionController;
+import edu.stanford.communication.screenomics.screenomics.AppsCollectionController;
 import edu.stanford.communication.screenomics.battery.BatteryCollectionController;
 import edu.stanford.communication.screenomics.locations.LocationsCollectionController;
-import edu.stanford.communication.screenomics.modulemanager.ModuleController;
 import edu.stanford.communication.screenomics.network.NetworkCollectionController;
 import edu.stanford.communication.screenomics.specs.SpecsCollectionController;
 
@@ -249,7 +241,7 @@ public class ScreenMonitorService extends Service {
         // Module collection is started in startMonitoringComponents via each module's controller.
     }
 
-    
+
     private void initializeSettingsManager() {
         if (!SettingsManager.exists()) {
             Log.i("SettingsManager", "start setting manager");

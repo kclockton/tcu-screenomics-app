@@ -1,4 +1,4 @@
-package edu.stanford.communication.screenomics.apps;
+package edu.stanford.communication.screenomics.screenomics;
 
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
@@ -12,7 +12,6 @@ import android.util.Log;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 

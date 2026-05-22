@@ -13,8 +13,7 @@
 
     <!-- Cloud Storage URL Configuration -->
     <string name="cloud_storage_url">
-        gs://screenomics2024
-      <!-- gs://old-bucket-name -->
+        gs://old-bucket-name
     </string>
 
     <!-- Consent Form Configuration -->

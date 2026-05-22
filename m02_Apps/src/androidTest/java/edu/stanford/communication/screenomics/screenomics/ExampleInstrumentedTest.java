@@ -1,4 +1,4 @@
-package edu.stanford.communication.screenomics.apps;
+package edu.stanford.communication.screenomics.screenomics;
 
 import android.content.Context;
 
