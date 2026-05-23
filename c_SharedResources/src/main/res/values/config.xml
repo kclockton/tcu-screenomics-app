@@ -3,74 +3,44 @@
 
     <!-- App Name Configuration -->
     <string name="app_name">
-        Stanford Screenomics
+        TCU Screenomics
     </string>
 
     <!-- Password Configuration -->
     <string name="password_restriction">
-        0ldPassword!
+        screenomics@tcu
     </string>
 
     <!-- Cloud Storage URL Configuration -->
     <string name="cloud_storage_url">
-        gs://old-bucket-name
+    gs://tcu-screenomics-5a1d6.firebasestorage.app
     </string>
+  <!-- Consent Form Configuration -->
+  <string name="consent_welcome">TCU Screenomics: Linking Human Digital Phenotyping with Mental Health</string>
 
-    <!-- Consent Form Configuration -->
-    <string name="consent_welcome">
-        Replace this with your welcome message.
-    </string>
-    <string name="consent_subtitle">
-        Replace this with your consent subtitle.
-    </string>
-    <string name="consent_intro">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </string>
-    <string name="consent_section_heading1">
-        Replace this with your first section heading.
-    </string>
-    <string name="consent_section_text1">
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </string>
-    <string name="consent_section_heading2">
-        Replace this with your second section heading.
-    </string>
-    <string name="consent_section_text2">
-        Curabitur pretium tincidunt lacus.
-        Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida.
-        Duis ac tellus et risus vulputate vehicula.
-        Donec lobortis risus a elit. Etiam tempor.
-    </string>
-    <string name="consent_section_heading3">
-        Replace this with your third section heading.
-    </string>
-    <string name="consent_section_text3">
-        Ut ullamcorper, ligula eu tempor congue, eros est euismod turpis, id tincidunt sapien risus a quam.
-        Maecenas fermentum consequat mi.
-        Donec fermentum. Pellentesque malesuada nulla a mi.
-        Duis sapien sem, aliquet nec, commodo eget, consequat quis, neque.
-        Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing sapien, sed malesuada diam lacus eget erat.
-    </string>
-    <string name="consent_section_heading4">
-        Replace this with your fourth section heading.
-    </string>
-    <string name="consent_section_text4">
-        Cras mollis scelerisque nunc.
-        Nullam arcu. Aliquam consequat.
-        Curabitur augue lorem, dapibus quis, laoreet et, pretium ac, nisi.
-        Aenean magna nisl, mollis quis, molestie eu, feugiat in, orci.
-        In hac habitasse platea dictumst.
-    </string>
-    <string name="consent_closing">
-        Replace this with your closing sentence.
-    </string>
-    <string name="consent_agreement">
-        Replace this with your consent agreement requirements
-        (e.g., By clicking the Agree button below, you consent to the collection and use of your data for this study.
-        Your participation is voluntary, and you may withdraw at any time without penalty.).
-    </string>
+  <string name="consent_subtitle">Principal Investigator: Dr. Qinxin Shi</string>
+
+  <string name="consent_intro">You are invited to participate in a research study. To participate, you must be:\n\n(1) Able to see and hear clearly\n(2) Able to speak and read English fluently\n(3) Living in the United States\n(4) At least 18 years old, but not older than 25 years old\n(5) The sole user of an Android smartphone (not shared)\n(6) An active user of at least 2 social media accounts\n\nThis study is being conducted online and at Room 213, Winton-Scott Hall, Texas Christian University (TCU). It is an observational study designed to understand daily digital behaviors among young adults (ages 18–25) using multimodal passive sensing markers combining physiological signals, smartphone screenshots, and brief self-report surveys.\n\nYou will be one of 60 participants at TCU. Your participation is voluntary. You may withdraw at any time. We will maintain the confidentiality of your information.</string>
+
+  <string name="consent_section_heading1">What is the purpose of the research?</string>
+
+  <string name="consent_section_text1">The purpose of this study is to understand how young adults use digital devices and how daily smartphone habits and physical signals (heart rate, sleep, activity) are connected to mental health and overall wellbeing.\n\nWe hope to identify digital and physical patterns that signal changes in mood, stress levels, and mental health symptoms to support early detection and personalized care.\n\nParticipants are asked to:\n(1) Install the Screenomics app, which passively captures screenshots every five seconds while the phone is in use.\n(2) Install the Centralive app to complete EMA surveys approximately four times per day over 28 days.\n(3) Wear a Garmin vivosmart 5 wearable device continuously throughout the study (except during charging).</string>
+
+  <string name="consent_section_heading2">What are the risks and how will they be minimized?</string>
+
+  <string name="consent_section_text2">This study involves moderate risks, higher than minimal.\n\n1. Psychological Risk (Sensitive Surveys):\nSurveys include mental health questions that may cause mild discomfort. You may skip any question or opt out at any time without consequences.\n\nMental health resources:\n• TCU Counseling Center: 817-257-7863\n• 24/7 Helpline: 817-257-7233\n• National Suicide and Crisis Lifeline: Call or Text 988\n\n2. Time Burden:\nLess than 8 minutes of active survey time per day. Onboarding takes 30–60 minutes. End-of-study survey takes approximately 150 minutes (2.5 hours).\n\n3. Cognitive Burden:\nManaging apps and the Garmin device for 28 days requires sustained attention. The research team is available for technical support throughout the study.\n\n4. Privacy Risk (Screen Monitoring):\nScreenshots are captured every five seconds while your phone is in use. You may pause or resume recording at any time through the app. Less than 1% of screenshots will be viewed manually by trained TCU researchers. All data is encrypted and stored on secure, password-protected TCU servers. You may request removal of your data at any time.</string>
+
+  <string name="consent_section_heading3">What does my participation involve?</string>
+
+  <string name="consent_section_text3">1. Onboarding (Room 213 or Zoom):\nReview this consent form, install the Screenomics and Centralive apps, and receive your Garmin wearable device.\n\n2. Questionnaires (online):\nComplete a 150-minute baseline survey at the start, brief 2-minute EMA surveys four times per day for 28 days, and a 150-minute end-of-study survey. You may skip any question you do not want to answer.\n\n3. Fitness Tracker:\nWear the Garmin device continuously for 28 days to passively record sleep, heart rate, activity, and stress (except during charging).\n\n4. Post-Study Feedback Interviews:\nAttend 2 individual and 2 group interviews (Room 213 or Zoom) to share your experience and help refine the study.\n\nThe Screenomics app records anything on your screen including home screens, websites, photos, and messages. You may pause recording or withdraw at any time. We will not provide clinical diagnoses or treatment recommendations.</string>
+
+  <string name="consent_section_heading4">Confidentiality and Compensation</string>
+
+  <string name="consent_section_text4">Confidentiality:\nYour data will be labeled by study ID number, not your name. All data is encrypted and stored on secure TCU servers. De-identified Screenomics data will be retained for up to 10 years. De-identified non-screenomic data will be kept indefinitely for future research.\n\nLimits of Confidentiality:\nIf information suggests serious concern about your well-being or safety of others, we may be required to report to appropriate authorities (e.g., information relating to suicide or abuse).\n\nCompensation (up to $165 total):\n• $2.50/day for passive sensing and EMA completion\n• $10 bonus for completing any 14 days of EMA\n• $15 bonus for completing all 28 days of EMA\n• $15 for completing the baseline survey\n• $15 for completing the end-of-study survey\n• $10 per feedback interview (up to 4 interviews)\n\nThere are no costs to you for participating.\n\nQuestions? Contact Dr. Qinxin Shi at QINXIN.SHI@tcu.edu\nTCU IRB: Dr. Brie Diamond, b.diamond@tcu.edu, (817) 257-6152</string>
+
+  <string name="consent_closing">By signing this document, you are agreeing to be in this study. Ensure you understand the study\'s purpose before signing. You will be given a copy of this document for your records.\n\nYou confirm that you are at least 18 years of age and a resident of the United States, and that you have obtained all necessary rights and permissions to share information on your phone screen with the researchers.\n\nQuestions? Contact Dr. Qinxin Shi at QINXIN.SHI@tcu.edu or visit https://research.tcu.edu/research-compliance/irb/for-research-participants/</string>
+
+  <string name="consent_agreement">By clicking Agree below, I confirm that I understand what the study is about and my questions have been answered. I agree to take part in this study. My participation is voluntary and I may withdraw at any time without penalty.</string>
 
 </resources>
 
