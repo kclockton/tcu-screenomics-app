@@ -1,18 +1,24 @@
 {
   "project_info": {
     "project_number": "780068086737",
+    "firebase_url": "https://tcu-screenomics-5a1d6-default-rtdb.firebaseio.com",
     "project_id": "tcu-screenomics-5a1d6",
     "storage_bucket": "tcu-screenomics-5a1d6.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:780068086737:android:cb04f183ceaf52b8c136f0",
+        "mobilesdk_app_id": "1:780068086737:android:f8b68b33295b5fbec136f0",
         "android_client_info": {
-          "package_name": "edu.tcu.screenomics"
+          "package_name": "edu.stanford.tcu.screenomics"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "780068086737-qp41nsogd2mn1khi2elbhjnff2t8dgph.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyB-SWyRM4d0y6T2CIIKBkqstBJ8qScC3hs"
@@ -20,7 +26,41 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "780068086737-qp41nsogd2mn1khi2elbhjnff2t8dgph.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:780068086737:android:cb04f183ceaf52b8c136f0",
+        "android_client_info": {
+          "package_name": "edu.tcu.screenomics"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "780068086737-qp41nsogd2mn1khi2elbhjnff2t8dgph.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-SWyRM4d0y6T2CIIKBkqstBJ8qScC3hs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "780068086737-qp41nsogd2mn1khi2elbhjnff2t8dgph.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
