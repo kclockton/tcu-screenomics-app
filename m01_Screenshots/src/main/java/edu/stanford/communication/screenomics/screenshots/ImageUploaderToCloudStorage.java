@@ -114,7 +114,7 @@ public class ImageUploaderToCloudStorage implements Runnable
         // Make sure Firebase thinks we're logged in too. If not, try to log in.
         if(auth.getCurrentUser() == null)
         {
-            auth.signInWithEmailAndPassword(subject_id, user_password)
+            auth.signInWithEmailAndPassword(sharedPref.GetUserEmail(), user_password)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -275,7 +275,8 @@ public class ImageUploaderToCloudStorage implements Runnable
 
                 return;
             }else {
-                onUploadEnd(false);
+                startUpload(destDirectory);
+                Log.w(TAG, "use other connection type");
                 return;
             }
 
