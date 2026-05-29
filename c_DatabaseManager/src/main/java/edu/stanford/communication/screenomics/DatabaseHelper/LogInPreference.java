@@ -96,7 +96,7 @@ public class LogInPreference {
         return prefs.getString(user_subj_id,"");
     }
 
-    // This function is used to retrieve user password from shared pref
+    // This function is used to retrieve user password from shared pref.put
 
     public String GetUserPassword(){
         prefs = context.getSharedPreferences(SharedPref, MODE_PRIVATE);
