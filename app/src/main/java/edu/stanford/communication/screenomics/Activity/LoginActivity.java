@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,6 +35,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
@@ -138,37 +140,8 @@ public class LoginActivity extends AppCompatActivity {
         sharedPref = new AppPreferences(LoginActivity.this);
         LoginPref = new LogInPreference(LoginActivity.this);
 
-        if (!sharedPref.GetShowConsentDialog()){
-            Dialog dialog = new Dialog(LoginActivity.this);
-            dialog.setContentView(R.layout.consent_dialog);
-            dialog.setCancelable(false);
-            Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.CENTER);
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-            CardView ConsentCard;
-            CardView DonotConsentCard;
-
-            ConsentCard = (CardView) dialog.findViewById(R.id.ConsentCard);
-            DonotConsentCard = (CardView) dialog.findViewById(R.id.DonotConsentCard);
-
-            ConsentCard.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    sharedPref.Put_SHOW_CONSENT_DIALOG(true);
-                    dialog.dismiss();
-                    Toast.makeText(LoginActivity.this, "Thank you for providing consent.", Toast.LENGTH_SHORT).show();
-                }
-            });
-
-            DonotConsentCard.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    sharedPref.Put_SHOW_CONSENT_DIALOG(false);
-                    Toast.makeText(LoginActivity.this, "The user consent is required \nbefore the study participation", Toast.LENGTH_SHORT).show();
-                }
-            });
-
-            dialog.show();
+        if (!sharedPref.GetShowConsentDialog()) {
+            showMainConsentDialog();
         }
 
         // Add listeners for login and register.
@@ -498,6 +471,9 @@ public class LoginActivity extends AppCompatActivity {
             String number = mNumberView.getText().toString();
             sharedPref.AddUserNumber(number);
 
+            String subjectId = mCodeView.getText().toString().toUpperCase() + "_" + mNumberView.getText().toString();
+            uploadConsentToFirebase(subjectId);
+
             Intent intent;
             intent = new Intent(this, PermissionParentActivity.class);
             IsUserWantLoginOrRegister = false;
@@ -508,6 +484,106 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
 
+    }
+
+    private void showMainConsentDialog() {
+        Dialog dialog = new Dialog(LoginActivity.this);
+        dialog.setContentView(R.layout.consent_dialog);
+        dialog.setCancelable(false);
+        Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.CENTER);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        CardView ConsentCard = dialog.findViewById(R.id.ConsentCard);
+        CardView DonotConsentCard = dialog.findViewById(R.id.DonotConsentCard);
+
+        ConsentCard.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sharedPref.PutConsentMain(true);
+                dialog.dismiss();
+                showOptionalConsentDialog();
+            }
+        });
+
+        DonotConsentCard.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(LoginActivity.this, "The user consent is required \nbefore the study participation", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void showOptionalConsentDialog() {
+        Dialog optDialog = new Dialog(LoginActivity.this);
+        optDialog.setContentView(R.layout.consent_optional_dialog);
+        optDialog.setCancelable(false);
+        Objects.requireNonNull(optDialog.getWindow()).setGravity(Gravity.CENTER);
+        optDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        RadioGroup rgFutureData = optDialog.findViewById(R.id.rg_future_data);
+        RadioGroup rgFutureContact = optDialog.findViewById(R.id.rg_future_contact);
+        CardView continueCard = optDialog.findViewById(R.id.ContinueCard);
+
+        continueCard.setAlpha(0.4f);
+        continueCard.setClickable(false);
+
+        RadioGroup.OnCheckedChangeListener selectionListener = new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                boolean bothAnswered = rgFutureData.getCheckedRadioButtonId() != -1
+                        && rgFutureContact.getCheckedRadioButtonId() != -1;
+                continueCard.setAlpha(bothAnswered ? 1.0f : 0.4f);
+                continueCard.setClickable(bothAnswered);
+            }
+        };
+
+        rgFutureData.setOnCheckedChangeListener(selectionListener);
+        rgFutureContact.setOnCheckedChangeListener(selectionListener);
+
+        continueCard.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean futureData = rgFutureData.getCheckedRadioButtonId() == R.id.rb_future_data_yes;
+                boolean futureContact = rgFutureContact.getCheckedRadioButtonId() == R.id.rb_future_contact_yes;
+                sharedPref.PutConsentFutureData(futureData);
+                sharedPref.PutConsentFutureContact(futureContact);
+                sharedPref.PutConsentPendingUpload(true);
+                sharedPref.Put_SHOW_CONSENT_DIALOG(true);
+                optDialog.dismiss();
+                Toast.makeText(LoginActivity.this, "Thank you for providing consent.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        optDialog.show();
+    }
+
+    private void uploadConsentToFirebase(String subjectId) {
+        if (!sharedPref.GetConsentPendingUpload()) return;
+
+        Map<String, Object> consentData = new HashMap<>();
+        consentData.put("consent_main", sharedPref.GetConsentMain());
+        consentData.put("consent_future_data", sharedPref.GetConsentFutureData());
+        consentData.put("consent_future_contact", sharedPref.GetConsentFutureContact());
+        consentData.put("consent_form_version", "8.2025");
+        consentData.put("consent_timestamp", new EventTimestamp().getTimestring());
+        consentData.put("consent_server_timestamp", FieldValue.serverTimestamp());
+
+        FirebaseFirestore.getInstance()
+                .collection("users")
+                .document(subjectId)
+                .collection("consent")
+                .document("record")
+                .set(consentData)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            sharedPref.PutConsentPendingUpload(false);
+                        }
+                    }
+                });
     }
 
     public boolean containsSpecialCharacters(String input) {
