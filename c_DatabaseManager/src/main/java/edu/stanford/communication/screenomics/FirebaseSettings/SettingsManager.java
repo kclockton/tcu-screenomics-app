@@ -400,11 +400,25 @@ public class SettingsManager
             Log.i(TAG,"no null data");
             for (Map.Entry<String, Object> entry : data.entrySet()) {
                 String key = entry.getKey();
-                String value = entry.getValue().toString();
-                // Print the key and value
-                settings.put(key, Integer.parseInt(value));
+                Object raw = entry.getValue();
+                if (raw == null) {
+                    Log.w(TAG, "Skipping null setting: " + key);
+                    continue;
+                }
+                int intValue;
+                if (raw instanceof Boolean) {
+                    intValue = ((Boolean) raw) ? 1 : 0;
+                } else {
+                    try {
+                        intValue = Integer.parseInt(raw.toString());
+                    } catch (NumberFormatException e) {
+                        Log.w(TAG, "Skipping non-integer setting: " + key + " = " + raw);
+                        continue;
+                    }
+                }
+                settings.put(key, intValue);
                 keys.add(key);
-                System.out.println("Key: "+ TAG + key + ", Value: " + value);
+                System.out.println("Key: "+ TAG + key + ", Value: " + intValue);
             }
 
             if (!IsDefault){

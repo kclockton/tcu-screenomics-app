@@ -167,6 +167,8 @@ public class ScreenshotsUpdater {
 
     public void startRepeatingEvents()
     {
+        Log.i(TAG, "startRepeatingEvents called");
+
         // Set up a runnable that acquires an image at a fixed interval.
         screengrabber = new Runnable() {
             @Override
@@ -198,7 +200,12 @@ public class ScreenshotsUpdater {
         edu.stanford.communication.screenomics.NonTextBasedData.CloudStorageUploadScheduler scheduler =
                 new edu.stanford.communication.screenomics.NonTextBasedData.CloudStorageUploadScheduler(
                         context, handler, edu.stanford.communication.screenomics.NonTextBasedData.CloudStorageUploadConfig.DEFAULT, uploader);
-        handler.postDelayed(scheduler, notTextInterval);
+        long initialUploadDelay = edu.stanford.communication.screenomics.FirebaseSettings.SettingsManager.exists()
+                ? edu.stanford.communication.screenomics.FirebaseSettings.SettingsManager.val("data-nontext-upload-interval")
+                : notTextInterval;
+        if (initialUploadDelay <= 0 || initialUploadDelay > 300000) initialUploadDelay = 300000;
+        handler.postDelayed(scheduler, initialUploadDelay);
+        Log.i(TAG, "CloudStorageUploadScheduler posted, fires in " + initialUploadDelay + "ms");
 
         // Get app version info.
         String versionCode = "", versionName = "";

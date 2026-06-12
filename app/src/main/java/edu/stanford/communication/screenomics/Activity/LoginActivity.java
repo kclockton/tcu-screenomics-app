@@ -57,6 +57,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import edu.stanford.communication.screenomics.BuildConfig;
 import edu.stanford.communication.screenomics.AppUtils.AppPreferences;
 import edu.stanford.communication.screenomics.DatabaseHelper.LogInPreference;
 import edu.stanford.communication.screenomics.FirebaseSettings.FirebaseManagerSingleton;
@@ -124,6 +125,10 @@ public class LoginActivity extends AppCompatActivity {
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
+        if (BuildConfig.DEMO_MODE) {
+            ((View) mCodeView.getParent()).setVisibility(View.GONE);
+        }
+
         // Make the code EditText all-caps.
         InputFilter[] editFilters = mCodeView.getFilters();
         InputFilter[] newFilters = new InputFilter[editFilters.length + 1];
@@ -168,14 +173,14 @@ public class LoginActivity extends AppCompatActivity {
 
                 IsUserWantLoginOrRegister = true;
 
-                String code = mCodeView.getText().toString();
-
-                if (!containsSpecialCharacters(code)){
-                    mCodeView.setError("Make sure code does not contain special characters.");
-
-                }else {
-                    attemptLogin(true);
+                if (!BuildConfig.DEMO_MODE) {
+                    String code = mCodeView.getText().toString();
+                    if (!containsSpecialCharacters(code)) {
+                        mCodeView.setError("Make sure code does not contain special characters.");
+                        return;
+                    }
                 }
+                attemptLogin(true);
 
             }
         });
@@ -278,7 +283,7 @@ public class LoginActivity extends AppCompatActivity {
             focusView = mPasswordView;
             cancel = true;
         }
-        if (register && !password.equals(PASSWORD_RESTRICTION))
+        if (register && !BuildConfig.DEMO_MODE && !password.equals(PASSWORD_RESTRICTION))
         {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
@@ -296,20 +301,22 @@ public class LoginActivity extends AppCompatActivity {
             cancel = true;
         }
 
-        // Check for a valid number.
-        if (TextUtils.isEmpty(number))
-        {
-            mNumberView.setError(getString(R.string.error_field_required));
-            focusView = mNumberView;
-            cancel = true;
-        }
+        if (!BuildConfig.DEMO_MODE) {
+            // Check for a valid number.
+            if (TextUtils.isEmpty(number))
+            {
+                mNumberView.setError(getString(R.string.error_field_required));
+                focusView = mNumberView;
+                cancel = true;
+            }
 
-        // Check for a valid code.
-        if (TextUtils.isEmpty(code))
-        {
-            mCodeView.setError(getString(R.string.error_field_required));
-            focusView = mCodeView;
-            cancel = true;
+            // Check for a valid code.
+            if (TextUtils.isEmpty(code))
+            {
+                mCodeView.setError(getString(R.string.error_field_required));
+                focusView = mCodeView;
+                cancel = true;
+            }
         }
 
         if (cancel) {
@@ -326,13 +333,14 @@ public class LoginActivity extends AppCompatActivity {
         /*mAuthTask = new UserLoginTask(email, password);
         mAuthTask.execute((Void) null);*/
 
+        String subjId = BuildConfig.DEMO_MODE ? email : calcSubjectId(code, number, email);
         if (register)
         {
-            createAccount(calcSubjectId(code, number, email), password);
+            createAccount(subjId, password);
         }
         else
         {
-            signIn(calcSubjectId(code, number, email), password);
+            signIn(subjId, password);
         }
     }
 
@@ -400,8 +408,9 @@ public class LoginActivity extends AppCompatActivity {
 
         // Get code and data subject ID.
         final String code_id = mCodeView.getText().toString().toUpperCase();
-//            final String dataSubjectId = Utils.getDataSubjectId(user.getEmail());
-        String dataSubjectId = mCodeView.getText().toString().toUpperCase()+"_" + mNumberView.getText().toString();
+        String dataSubjectId = BuildConfig.DEMO_MODE
+            ? "DEMO_" + user.getEmail().replace("@", "_at_").replace(".", "_")
+            : mCodeView.getText().toString().toUpperCase() + "_" + mNumberView.getText().toString();
 
         DocumentReference collectionReference = FirebaseFirestore.getInstance().collection("users").document(dataSubjectId).collection("specs").document("specs");
 
@@ -471,7 +480,9 @@ public class LoginActivity extends AppCompatActivity {
             String number = mNumberView.getText().toString();
             sharedPref.AddUserNumber(number);
 
-            String subjectId = mCodeView.getText().toString().toUpperCase() + "_" + mNumberView.getText().toString();
+            String subjectId = BuildConfig.DEMO_MODE
+                ? "DEMO_" + mEmailView.getText().toString().toLowerCase().replace("@", "_at_").replace(".", "_")
+                : mCodeView.getText().toString().toUpperCase() + "_" + mNumberView.getText().toString();
             uploadConsentToFirebase(subjectId);
 
             Intent intent;
